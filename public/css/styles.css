@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Kosugi|Permanent+Marker&display=swap');
 @import '_reset.css';
+@import 'homepage.css';
 
 html {
   --cadmium-red: #D80026;
@@ -12,6 +13,7 @@ html {
   --content-font: 'Kosugi', Arial, Helvetica, sans-serif;
 
   background: var(--orange);
+  overflow: hidden;
 }
 
 main {

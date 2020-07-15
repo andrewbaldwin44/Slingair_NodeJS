@@ -2,8 +2,12 @@ function findCustomer(id) {
   return reservations.find(customer => customer.id == id);
 }
 
+function handleHomepage(req, res) {
+  res.render('./pages/homepage.ejs', { title: 'Sling Air' });
+}
+
 function handleSeatSelection(req, res) {
-  res.render('./pages/seat-select', { title: 'Seat Selection', allFlights })
+  res.render('./pages/seat-select', { title: 'Seat Selection', allFlights });
 }
 
 function handleFlight(req, res) {
@@ -37,6 +41,10 @@ function confirmedFlightPurchase(req, res, next) {
   } else next();
 }
 
+function findFlight(req, res) {
+  res.render('./pages/find-flight', { title: 'Find your Flight!' });
+}
+
 function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
@@ -46,6 +54,6 @@ const { flights } = require('./test-data/flightSeating');
 const { reservations } = require('./test-data/reservations');
 const allFlights = Object.keys(flights);
 
-module.exports = { handleSeatSelection, handleFlight,
+module.exports = { handleHomepage, handleSeatSelection, handleFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   handleFourOhFour }
+                   findFlight, handleFourOhFour }
