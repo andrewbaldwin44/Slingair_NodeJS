@@ -5,7 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const { handleFlight, handleFourOhFour } = require('./handlers');
+const { handleSeatSelection, handleFlight, handleFourOhFour,
+        newFlightPurchase, confirmedFlightPurchase } = require('./handlers');
 
 const PORT = process.env.PORT || 8000;
 
@@ -19,8 +20,12 @@ app
 .use(express.static('public'))
 .use(bodyParser.json())
 .use(express.urlencoded({extended: false}))
+.set('view engine', 'ejs')
 
+.get('/seat-select', handleSeatSelection)
 .get('/flights/:flightNumber', handleFlight)
+.post('/customers', newFlightPurchase)
+.get('/flight-confirmed/:id', confirmedFlightPurchase)
 .get('*', handleFourOhFour)
 
 .listen(PORT, () => console.log(`Listening on port ${PORT}`));

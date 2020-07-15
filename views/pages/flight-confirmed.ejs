@@ -1,0 +1,29 @@
+<%- include('../partials/head') -%>
+<div class='main'>
+    <header class='header'>
+        <h1 class='header-logo'>Air Slingshot</h1>
+    </div>
+    <div class="content confirmation">
+        <div class="user">
+            <p class="message">Your flight is confirmed!</p>
+            <ul class="user-info">
+                <li>
+                  Flight #:<span id="flight"><%= customer.flight %></span>
+                  Seat #: <span id="seat"><%= customer.seat %></span>
+                </li>
+                <li>
+                  Name:
+                  <span id="name"><%= `${customer.givenName} ${customer.surname}` %></span>
+                </li>
+                <li>
+                  Email:
+                  <span id="email"><%= customer.email %></span>
+                </li>
+            </ul>
+        </div>
+        <div class="tombstone"></div>
+    </div>
+</div>
+<p class='footer-logo'>The only way to fly!</p>
+<script src="./confirmed.js"></script>
+<%- include('../partials/footer') -%>

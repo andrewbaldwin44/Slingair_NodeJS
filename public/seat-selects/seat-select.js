@@ -2,7 +2,10 @@ const flightInput = document.getElementById('flight');
 const seatsDiv = document.getElementById('seats-section');
 const confirmButton = document.getElementById('confirm-button');
 
-const validFlightNumber = /^[SA]{2}\d{3}$/g;
+const firstName = document.querySelector('#givenName');
+const lastName = document.querySelector('#surname');
+const email = document.querySelector('#email');
+
 const seatColumns = ['A', 'B', 'C', 'D', 'E', 'F'];
 let selection = '';
 
@@ -26,7 +29,7 @@ function createSeats(seatAvailibility) {
   for (let r = 1; r <= 10; r++) {
     const row = document.createElement('ol');
     row.classList.add('row');
-    row.classList.add('fuselage');
+    row.classList.add('uselage');
     seatsDiv.appendChild(row);
 
     for (let s = 0; s < 6; s++) {
@@ -62,9 +65,8 @@ function handleSeatSelection(seatMap) {
 
 function toggleFormContent(event) {
   const flightNumber = flightInput.value;
-  console.log(flightNumber)
 
-  if (validFlightNumber.test(flightNumber)) {
+  if (flightNumber !== 'undefined') {
     fetch(`/flights/${flightNumber}`)
     .then(res => res.json())
     .then(data => {
@@ -79,17 +81,29 @@ function toggleFormContent(event) {
 
 function handleConfirmSeat(event) {
   event.preventDefault();
-  // TODO: everything in here!
-  fetch('/users', {
+
+  const customer = {
+    'flight': flightInput.value,
+    'seat': selection,
+    'givenName': firstName.value,
+    'surname': lastName.value,
+    'email': email.value
+  }
+
+  fetch('/customers', {
       method: 'POST',
-      body: JSON.stringify({
-          'givenName': document.getElementById('givenName').value
-      }),
+      body: JSON.stringify(customer),
       headers: {
           'Accept': 'application/json',
           "Content-Type": "application/json"
       }
   })
+  .then(response => response.json())
+  .then(data => {
+    const id = data.confirmation;
+    window.location.href = `/flight-confirmed/${id}`;
+    window.location
+  })
 }
 
-flightInput.addEventListener('blur', toggleFormContent);
+flightInput.addEventListener('change', toggleFormContent);
