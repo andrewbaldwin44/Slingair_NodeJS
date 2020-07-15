@@ -10,12 +10,12 @@ html {
     --page-padding: 24px;
     --heading-font: 'Permanent Marker', Arial, Helvetica, sans-serif;
     --content-font: 'Kosugi', Arial, Helvetica, sans-serif;
-    
+
     background: var(--orange);
 }
 
 
-main { 
+main {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 190px);;
