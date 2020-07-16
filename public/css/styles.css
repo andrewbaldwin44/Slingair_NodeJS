@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Kosugi|Permanent+Marker&display=swap');
 @import '_reset.css';
 @import 'homepage.css';
+@import 'users.css';
 
 html {
   --cadmium-red: #D80026;

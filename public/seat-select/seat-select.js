@@ -86,7 +86,7 @@ function handleConfirmSeat(event) {
   const customer = {
     'flight': flightInput.value,
     'seat': selection,
-    'firstName': firstName.value,
+    'givenName': firstName.value,
     'surname': lastName.value,
     'email': email.value
   }

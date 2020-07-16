@@ -1,0 +1,17 @@
+<%- include('../partials/head') -%>
+<link rel="stylesheet" href="/css/master.css">
+<div class="users-main">
+  <h1>Slingair Flyers</h1>
+
+  <ol class="users">
+    <% paginatedUsers.results.forEach(user => { %>
+      <li>
+        <p><%= `${user.givenName} ${user.surname}` %></p>
+        <p><%= user.email %></p>
+        <a href="#"><%= user.flight %></a>
+      </li>
+      <% }) %>
+    </ol>
+</div>
+<%- include('../partials/pagination') -%>
+<%- include('../partials/footer') -%>

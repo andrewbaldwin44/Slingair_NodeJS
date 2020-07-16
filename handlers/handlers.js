@@ -1,9 +1,14 @@
-const { v4: uuidv4 } = require('uuid');
 const request = require('request-promise');
-require('dotenv').config();
 
 function findUser(allUsers, name) {
   return allUsers.find(user => user.givenName == name);
+}
+
+async function getAllUsers() {
+  return await request({
+    uri: 'https://journeyedu.herokuapp.com/slingair/users/',
+    json: true
+  });
 }
 
 function handleHomepage(req, res) {
@@ -18,7 +23,7 @@ async function handleSeatSelection(req, res) {
   res.render('./pages/seat-select', { title: 'Seat Selection', allFlights });
 }
 
-async function handleFlight(req, res) {
+async function showFlight(req, res) {
   const { flightNumber } = req.params;
   const response = await request({
     uri: `https://journeyedu.herokuapp.com/slingair/flights/${flightNumber}`,
@@ -36,6 +41,7 @@ async function handleFlight(req, res) {
 
 async function newFlightPurchase(req, res) {
   const customerInfo = req.body;
+  console.log(req.body)
 
   try {
     const registerUser = await request({
@@ -79,10 +85,7 @@ function findFlight(req, res) {
 
 async function flightLookup(req, res) {
   const { name } = req.body;
-  const allUsers = await request({
-    uri: 'https://journeyedu.herokuapp.com/slingair/users/',
-    json: true
-  });
+  const allUsers = await getAllUsers();
 
   const user = findUser(allUsers, name);
 
@@ -91,29 +94,10 @@ async function flightLookup(req, res) {
   } else res.status(401).json({ status: 401, message: 'Reservation not found!' });
 }
 
-function handleAdmin(req, res) {
-  res.render('./pages/admin', { title: 'Admin' })
-}
-
-function confirmAuthentication(req, res) {
-  const password = req.body.password;
-
-  console.log(process.env.PASSWORD)
-
-  if (password == process.env.PASSWORD) {
-    res.status(201).json({ status: 201 });
-  } else res.status(401).json({ status: 401, message: 'Wrong password!' });
-}
-
-function handleAuthenticated(req, res) {
-  res.send('cool')
-}
-
 function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
 
-module.exports = { handleHomepage, handleSeatSelection, handleFlight,
+module.exports = { handleHomepage, handleSeatSelection, showFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, flightLookup, handleAdmin, confirmAuthentication,
-                   handleAuthenticated, handleFourOhFour }
+                   findFlight, flightLookup, handleFourOhFour, getAllUsers }

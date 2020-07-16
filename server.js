@@ -5,10 +5,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const { handleHomepage, handleSeatSelection, handleFlight,
+const { handleHomepage, handleSeatSelection, showFlight,
         newFlightPurchase, confirmedFlightPurchase, findFlight,
-        flightLookup, handleAdmin, confirmAuthentication, handleAuthenticated,
-        handleFourOhFour } = require('./handlers');
+        flightLookup, handleFourOhFour } = require('./handlers/handlers');
+
+const { handleAdmin, confirmAuthentication, handleAuthenticated,
+        handleUsers, handleFlights } = require('./handlers/admin-handlers');
 
 const PORT = process.env.PORT || 8000;
 
@@ -26,7 +28,7 @@ app
 
 .get('/', handleHomepage)
 .get('/seat-select', handleSeatSelection)
-.get('/flights/:flightNumber', handleFlight)
+.get('/flights/:flightNumber', showFlight)
 .post('/customers', newFlightPurchase)
 .get('/flight-confirmed/:id', confirmedFlightPurchase)
 .get('/find-flight', findFlight)
@@ -34,6 +36,8 @@ app
 .get('/admin', handleAdmin)
 .post('/confirm-authentication', confirmAuthentication)
 .get('/admin-authenticated', handleAuthenticated)
+.get('/admin-authenticated/users', handleUsers)
+.get('/admin-authenticated/flights', handleFlights)
 .get('*', handleFourOhFour)
 
 .listen(PORT, () => console.log(`Listening on port ${PORT}`));

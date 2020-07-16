@@ -16,9 +16,7 @@ function validatePassword() {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data)
     if (data.status == 201) {
-      console.log('cool')
       window.location.href = '/admin-authenticated';
     }
     else console.log(data.message);
