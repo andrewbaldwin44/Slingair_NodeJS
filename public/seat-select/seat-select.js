@@ -10,6 +10,7 @@ const seatColumns = ['A', 'B', 'C', 'D', 'E', 'F'];
 let selection = '';
 
 function renderSeats(seatAvailibility) {
+  seatsDiv.innerHTML = '';
   showSeatMap();
   createSeats(seatAvailibility);
 
@@ -85,12 +86,12 @@ function handleConfirmSeat(event) {
   const customer = {
     'flight': flightInput.value,
     'seat': selection,
-    'givenName': firstName.value,
+    'firstName': firstName.value,
     'surname': lastName.value,
     'email': email.value
   }
 
-  fetch('/customers', {
+  fetch('https://journeyedu.herokuapp.com/slingair/users', {
       method: 'POST',
       body: JSON.stringify(customer),
       headers: {
@@ -100,6 +101,7 @@ function handleConfirmSeat(event) {
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data)
     const id = data.confirmation;
     window.location.href = `/flight-confirmed/${id}`;
   })

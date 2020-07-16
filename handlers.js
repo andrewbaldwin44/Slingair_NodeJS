@@ -61,10 +61,14 @@ function flightLookup(req, res) {
   res.status(201).json({ status: 201, confirmation });
 }
 
+function handleAdmin(req, res) {
+  res.render('./pages/admin', { title: 'Admin' })
+}
+
 function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
 
 module.exports = { handleHomepage, handleSeatSelection, handleFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, flightLookup, handleFourOhFour }
+                   findFlight, flightLookup, handleAdmin, handleFourOhFour }
