@@ -102,7 +102,6 @@ function handleConfirmSeat(event) {
   .then(data => {
     const id = data.confirmation;
     window.location.href = `/flight-confirmed/${id}`;
-    window.location
   })
 }
 

@@ -1,5 +1,5 @@
-function findCustomer(id) {
-  return reservations.find(customer => customer.id == id);
+function findCustomer(value, match = 'id') {
+  return reservations.find(customer => customer[match] == value);
 }
 
 function handleHomepage(req, res) {
@@ -45,6 +45,13 @@ function findFlight(req, res) {
   res.render('./pages/find-flight', { title: 'Find your Flight!' });
 }
 
+function flightLookup(req, res) {
+  const { name } = req.body;
+  const confirmation = findCustomer(name, 'givenName');
+
+  res.status(201).json({ status: 201, confirmation });
+}
+
 function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
@@ -56,4 +63,4 @@ const allFlights = Object.keys(flights);
 
 module.exports = { handleHomepage, handleSeatSelection, handleFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, handleFourOhFour }
+                   findFlight, flightLookup, handleFourOhFour }
