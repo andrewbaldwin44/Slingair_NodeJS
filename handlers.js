@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const request = require('request-promise');
+require('dotenv').config();
 
 function findUser(allUsers, name) {
   return allUsers.find(user => user.givenName == name);
@@ -94,10 +95,25 @@ function handleAdmin(req, res) {
   res.render('./pages/admin', { title: 'Admin' })
 }
 
+function confirmAuthentication(req, res) {
+  const password = req.body.password;
+
+  console.log(process.env.PASSWORD)
+
+  if (password == process.env.PASSWORD) {
+    res.status(201).json({ status: 201 });
+  } else res.status(401).json({ status: 401, message: 'Wrong password!' });
+}
+
+function handleAuthenticated(req, res) {
+  res.send('cool')
+}
+
 function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
 
 module.exports = { handleHomepage, handleSeatSelection, handleFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, flightLookup, handleAdmin, handleFourOhFour }
+                   findFlight, flightLookup, handleAdmin, confirmAuthentication,
+                   handleAuthenticated, handleFourOhFour }

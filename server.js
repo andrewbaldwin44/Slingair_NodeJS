@@ -7,7 +7,8 @@ const morgan = require('morgan');
 
 const { handleHomepage, handleSeatSelection, handleFlight,
         newFlightPurchase, confirmedFlightPurchase, findFlight,
-        flightLookup, handleAdmin, handleFourOhFour } = require('./handlers');
+        flightLookup, handleAdmin, confirmAuthentication, handleAuthenticated,
+        handleFourOhFour } = require('./handlers');
 
 const PORT = process.env.PORT || 8000;
 
@@ -31,6 +32,8 @@ app
 .get('/find-flight', findFlight)
 .post('/flight-lookup', flightLookup)
 .get('/admin', handleAdmin)
+.post('/confirm-authentication', confirmAuthentication)
+.get('/admin-authenticated', handleAuthenticated)
 .get('*', handleFourOhFour)
 
 .listen(PORT, () => console.log(`Listening on port ${PORT}`));
