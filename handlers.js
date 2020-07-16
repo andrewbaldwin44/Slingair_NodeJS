@@ -1,3 +1,8 @@
+const { v4: uuidv4 } = require('uuid');
+const { flights } = require('./test-data/flightSeating');
+const { reservations } = require('./test-data/reservations');
+const request = require('request-promise');
+
 function findCustomer(value, match = 'id') {
   return reservations.find(customer => customer[match] == value);
 }
@@ -6,7 +11,11 @@ function handleHomepage(req, res) {
   res.render('./pages/homepage.ejs', { title: 'Sling Air' });
 }
 
-function handleSeatSelection(req, res) {
+async function handleSeatSelection(req, res) {
+  const response = await request({ uri: 'https://journeyedu.herokuapp.com/slingair/flights',
+                                     json: true });
+  const allFlights = response.flights
+
   res.render('./pages/seat-select', { title: 'Seat Selection', allFlights });
 }
 
@@ -55,11 +64,6 @@ function flightLookup(req, res) {
 function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
-
-const { v4: uuidv4 } = require('uuid');
-const { flights } = require('./test-data/flightSeating');
-const { reservations } = require('./test-data/reservations');
-const allFlights = Object.keys(flights);
 
 module.exports = { handleHomepage, handleSeatSelection, handleFlight,
                    newFlightPurchase, confirmedFlightPurchase,

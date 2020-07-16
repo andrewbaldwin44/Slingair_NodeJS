@@ -67,10 +67,10 @@ function toggleFormContent(event) {
   const flightNumber = flightInput.value;
 
   if (flightNumber !== 'undefined') {
-    fetch(`/flights/${flightNumber}`)
+    fetch(`https://journeyedu.herokuapp.com/slingair/flights/${flightNumber}`)
     .then(res => res.json())
     .then(data => {
-      if (data.status == 200) renderSeats(data.flight);
+      if (data.status == 200) renderSeats(data[flightNumber]);
       else console.log(data.message);
     })
   }
