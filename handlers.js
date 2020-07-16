@@ -1,10 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
-const { flights } = require('./test-data/flightSeating');
-const { reservations } = require('./test-data/reservations');
 const request = require('request-promise');
 
-function findCustomer(value, match = 'id') {
-  return reservations.find(customer => customer[match] == value);
+function findUser(allUsers, name) {
+  return allUsers.find(user => user.givenName == name);
 }
 
 function handleHomepage(req, res) {
@@ -78,11 +76,18 @@ function findFlight(req, res) {
   res.render('./pages/find-flight', { title: 'Find your Flight!' });
 }
 
-function flightLookup(req, res) {
+async function flightLookup(req, res) {
   const { name } = req.body;
-  const confirmation = findCustomer(name, 'givenName');
+  const allUsers = await request({
+    uri: 'https://journeyedu.herokuapp.com/slingair/users/',
+    json: true
+  });
 
-  res.status(201).json({ status: 201, confirmation });
+  const user = findUser(allUsers, name);
+
+  if (user) {
+    res.status(201).json({ status: 201, userID: user.id });
+  } else res.status(401).json({ status: 401, message: 'Reservation not found!' });
 }
 
 function handleAdmin(req, res) {

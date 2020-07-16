@@ -16,7 +16,8 @@ submitButton.addEventListener('click', () => {
   })
   .then(response => response.json())
   .then(data => {
-    const id = data.confirmation.id;
+    console.log(data)
+    const id = data.userID;
     window.location.href = `/flight-confirmed/${id}`;
   });
 })
