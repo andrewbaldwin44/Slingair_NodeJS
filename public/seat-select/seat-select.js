@@ -68,10 +68,10 @@ function toggleFormContent(event) {
   const flightNumber = flightInput.value;
 
   if (flightNumber !== 'undefined') {
-    fetch(`https://journeyedu.herokuapp.com/slingair/flights/${flightNumber}`)
+    fetch(`/flights/${flightNumber}`)
     .then(res => res.json())
     .then(data => {
-      if (data.status == 200) renderSeats(data[flightNumber]);
+      if (data.status == 200) renderSeats(data.flight);
       else console.log(data.message);
     })
   }
@@ -91,7 +91,7 @@ function handleConfirmSeat(event) {
     'email': email.value
   }
 
-  fetch('https://journeyedu.herokuapp.com/slingair/users', {
+  fetch('/customers', {
       method: 'POST',
       body: JSON.stringify(customer),
       headers: {
@@ -101,10 +101,11 @@ function handleConfirmSeat(event) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data)
-    const id = data.confirmation;
-    window.location.href = `/flight-confirmed/${id}`;
+    const { confirmationNumber } = data;
+
+    window.location.href = `/flight-confirmed/${confirmationNumber}`;
   })
+  .catch(e => console.log(e));
 }
 
 flightInput.addEventListener('change', toggleFormContent);

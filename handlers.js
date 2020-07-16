@@ -19,33 +19,57 @@ async function handleSeatSelection(req, res) {
   res.render('./pages/seat-select', { title: 'Seat Selection', allFlights });
 }
 
-function handleFlight(req, res) {
-  console.log(req.params.flightNumber)
+async function handleFlight(req, res) {
   const { flightNumber } = req.params;
-  const flight = flights[flightNumber];
+  const response = await request({
+    uri: `https://journeyedu.herokuapp.com/slingair/flights/${flightNumber}`,
+    json: true
+  });
 
-  if (flight) {
+  const flight = response[flightNumber]
+
+  if (response.status == 200) {
     res.status(200).json({ status: 200, flight });
   } else {
     res.status(401).json({ status: 401, message: 'Flight not found' });
   }
 }
 
-function newFlightPurchase(req, res) {
+async function newFlightPurchase(req, res) {
   const customerInfo = req.body;
 
-  customerInfo.id = uuidv4();
+  try {
+    const registerUser = await request({
+      uri: 'https://journeyedu.herokuapp.com/slingair/users',
+      method: 'POST',
+      body: customerInfo,
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/json"
+      },
+      json: true
+    });
 
-  reservations.push(customerInfo);
+    confirmationNumber = registerUser.reservation.id;
 
-  res.status(201).json({ status: 201, message: 'cool', confirmation: customerInfo.id });
+    res.status(201).json({ status: 201, confirmationNumber });
+  }
+  catch (e) {
+    res.status(401).json({ status: 401, e });
+  }
 }
 
-function confirmedFlightPurchase(req, res, next) {
+async function confirmedFlightPurchase(req, res, next) {
   const { id } = req.params;
-  const customer = findCustomer(id);
+  const response = await request({
+    uri: `https://journeyedu.herokuapp.com/slingair/users/${id}`,
+    json: true
+  });
 
-  if (customer) {
+  const customer = response.data;
+  console.log(response, response.data);
+
+  if (response.status == 200) {
     res.render('./pages/flight-confirmed', { title: 'Take to the Skies!', customer })
   } else next();
 }
