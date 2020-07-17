@@ -17,7 +17,12 @@ submitButton.addEventListener('click', () => {
   .then(response => response.json())
   .then(data => {
     console.log(data)
-    const id = data.userID;
-    window.location.href = `/flight-confirmed/${id}`;
+    if (data.status == 201) {
+      const id = data.userID;
+      window.location.href = `/flight-confirmed/${id}`;
+    }
+    else {
+      console.log('Your flight could not be found!');
+    }
   });
 })

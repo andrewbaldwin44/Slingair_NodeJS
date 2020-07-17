@@ -21,3 +21,11 @@
   background-color: white;
   border: 2px solid black;
 }
+
+.paginated-results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 30%;
+  margin: 30px auto;
+}

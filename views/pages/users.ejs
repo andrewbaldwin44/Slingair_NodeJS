@@ -4,7 +4,7 @@
   <h1>Slingair Flyers</h1>
 
   <ol class="users">
-    <% paginatedUsers.results.forEach(user => { %>
+    <% paginatedResults.results.forEach(user => { %>
       <li>
         <p><%= `${user.givenName} ${user.surname}` %></p>
         <p><%= user.email %></p>

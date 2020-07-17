@@ -1,0 +1,36 @@
+<div class="paginated-results">
+
+  <a href="?page=1&limit=<%= paginatedResults.limit %>" class="pagination-button">First</a>
+
+  <% if (paginatedResults.previous) { %>
+    <a href="?page=<%= paginatedResults.previous %>&limit=<%= paginatedResults.limit %>"
+      class="pagination-button">
+      Previous
+    </a>
+  <% } %>
+
+  <% for (let i = 1; i <= paginatedResults.pages; i++) { -%>
+    <% if (paginatedResults.page == i) { %>
+      <a href="#" class="pagination-button disabled"><%= i %></a>
+    <% } %>
+
+    <% if (paginatedResults.lowerRange.includes(i) ||
+           paginatedResults.upperRange.includes(i)) { %>
+      <a href="?page=<%= i %>&limit=<%= paginatedResults.limit %>"
+         class="pagination-button">
+         <%= i %>
+       </a>
+     <% } %>
+  <% } %>
+
+  <% if (paginatedResults.next) { %>
+    <a href="?page=<%= paginatedResults.next %>&limit=<%= paginatedResults.limit %>"
+      class="pagination-button">
+      Next
+    </a>
+  <% } %>
+
+  <a href="?page=<%= paginatedResults.pages %>&limit=<%= paginatedResults.limit %>"
+    class="pagination-button">Last</a>
+
+</div>

@@ -41,6 +41,11 @@ main {
 .content.confirmation {
   margin: 200px auto 120px;
 }
+.confirmed-footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .footer-logo {
   background: url(../images/air-sling.png) no-repeat;
   background-size: contain;
@@ -49,7 +54,6 @@ main {
   font-family: var(--heading-font);
   font-size: 36px;
   padding-left: 36px;
-  width: fit-content;
 }
 
 h1, h2, h3, label, button {

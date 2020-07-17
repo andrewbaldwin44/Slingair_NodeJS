@@ -6,6 +6,8 @@ const firstName = document.querySelector('#givenName');
 const lastName = document.querySelector('#surname');
 const email = document.querySelector('#email');
 
+const submissionError = document.querySelector('#submission-error');
+
 const seatColumns = ['A', 'B', 'C', 'D', 'E', 'F'];
 let selection = '';
 
@@ -72,11 +74,7 @@ function toggleFormContent(event) {
     .then(res => res.json())
     .then(data => {
       if (data.status == 200) renderSeats(data.flight);
-      else console.log(data.message);
-    })
-  }
-  else {
-    console.log('Invalid flight number!');
+    });
   }
 }
 
@@ -101,11 +99,15 @@ function handleConfirmSeat(event) {
   })
   .then(response => response.json())
   .then(data => {
-    const { confirmationNumber } = data;
+    if (data.status == 201) {
+      const { confirmationNumber } = data;
 
-    window.location.href = `/flight-confirmed/${confirmationNumber}`;
-  })
-  .catch(e => console.log(e));
+      window.location.href = `/flight-confirmed/${confirmationNumber}`;
+    }
+    else {
+      submissionError.textContent = data.message;
+    }
+  });
 }
 
 flightInput.addEventListener('change', toggleFormContent);
