@@ -1,4 +1,4 @@
-const { getAllUsers } = require('./handlers');
+const { getAllUsers, getAllFlights } = require('./handlers');
 require('dotenv').config();
 const ls = require('local-storage');
 
@@ -39,9 +39,9 @@ async function handleFlights(req, res) {
   if (ls.get('authenticated')) {
     const allFlights = await getAllFlights();
 
-    const paginatedResults = paginate(req.query, allFlights);
+    //const paginatedResults = paginate(req.query, allFlights);
 
-    res.render('./pages/flights', { title: 'Slingair Flights', paginatedResults });
+    res.render('./pages/flights', { title: 'Slingair Flights', allFlights });
   } else res.redirect('/');
 }
 

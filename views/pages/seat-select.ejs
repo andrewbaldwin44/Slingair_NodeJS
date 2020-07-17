@@ -1,14 +1,6 @@
 <%- include('../partials/head') %>
 <%- include('../partials/banner') %>
-<div class="flight-select">
-  <label for="flight">Flight Number :</label>
-  <select name="flight" id="flight" class="flight">
-    <option value="undefined">Flight #</option>
-    <% allFlights.forEach(flight => { %>
-      <option value="<%= flight %>"><%= flight %></option>
-    <% }) %>
-  </select>
-</div>
+<%- include('../partials/flight-select') -%>
 <div class="form-container">
   <h2>Select your seat and Provide your information!</h2>
   <form id="seats" class="content" name="salesForm" onsubmit="handleConfirmSeat(event)">
@@ -37,5 +29,6 @@
     </div>
   </form>
 </div>
+<script src="/seat-select/create-seats.js"></script>
 <script src="/seat-select/seat-select.js"></script>
 <%- include('../partials/footer') %>

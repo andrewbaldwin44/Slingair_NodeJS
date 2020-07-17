@@ -11,14 +11,18 @@ async function getAllUsers() {
   });
 }
 
+async function getAllFlights() {
+  const response = await request({ uri: 'https://journeyedu.herokuapp.com/slingair/flights',
+                                   json: true });
+  return response.flights;
+}
+
 function handleHomepage(req, res) {
   res.render('./pages/homepage.ejs', { title: 'Sling Air' });
 }
 
 async function handleSeatSelection(req, res) {
-  const response = await request({ uri: 'https://journeyedu.herokuapp.com/slingair/flights',
-                                   json: true });
-  const allFlights = response.flights
+  const allFlights = await getAllFlights();
 
   res.render('./pages/seat-select', { title: 'Seat Selection', allFlights });
 }
@@ -99,4 +103,5 @@ function handleFourOhFour(req, res) {
 
 module.exports = { handleHomepage, handleSeatSelection, showFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, flightLookup, handleFourOhFour, getAllUsers }
+                   findFlight, flightLookup, handleFourOhFour, getAllUsers,
+                   getAllFlights}
