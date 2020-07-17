@@ -1,5 +1,6 @@
 const { getAllUsers } = require('./handlers');
 require('dotenv').config();
+const ls = require('local-storage');
 
 function handleAdmin(req, res) {
   res.render('./pages/admin', { title: 'Admin' });
@@ -9,29 +10,35 @@ function confirmAuthentication(req, res) {
   const password = req.body.password;
 
   if (password == process.env.PASSWORD) {
+    ls.set('authenticated', true);
     res.status(201).json({ status: 201 });
   } else res.status(401).json({ status: 401, message: 'Wrong password!' });
 }
 
 function handleAuthenticated(req, res) {
-  res.render('./pages/authenticated-admin', { title: 'Admin' });
-  json: true
+  if (ls.get('authenticated')) {
+    res.render('./pages/authenticated-admin', { title: 'Admin' });
+  } else res.redirect('/');
 }
 
 async function handleUsers(req, res) {
-  const allUsers = await getAllUsers();
+  if (ls.get('authenticated')) {
+    const allUsers = await getAllUsers();
 
-  const paginatedResults = paginate(req.query, allUsers);
+    const paginatedResults = paginate(req.query, allUsers);
 
-  res.render('./pages/users', { title: 'Slingair Customers', paginatedResults });
+    res.render('./pages/users', { title: 'Slingair Customers', paginatedResults });
+  } else res.redirect('/');
 }
 
 async function handleFlights(req, res) {
-  const allFlights = await getAllFlights();
+  if (ls.get('authenticated')) {
+    const allFlights = await getAllFlights();
 
-  const paginatedResults = paginate(req.query, allFlights);
+    const paginatedResults = paginate(req.query, allFlights);
 
-  res.render('./pages/flights', { title: 'Slingair Flights', paginatedResults });
+    res.render('./pages/flights', { title: 'Slingair Flights', paginatedResults });
+  } else res.redirect('/');
 }
 
 function range(start, end) {
