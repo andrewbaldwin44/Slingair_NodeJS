@@ -23,6 +23,10 @@ function handleAuthenticated(req, res) {
 
 async function handleUsers(req, res) {
   if (ls.get('authenticated')) {
+    if (Object.keys(req.query).length == 0) {
+      res.redirect(`${req.originalUrl}?page=1&limit=3`);
+    }
+
     const allUsers = await getAllUsers();
 
     const paginatedResults = paginate(req.query, allUsers);
