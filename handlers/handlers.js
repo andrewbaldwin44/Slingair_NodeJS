@@ -1,18 +1,19 @@
 const request = require('request-promise');
+const BASE_URL = 'https://slingairflights.herokuapp.com/';
 
 async function findUser(email) {
   const response = await request({
-    uri: `https://journeyedu.herokuapp.com/slingair/users/${email}`,
+    uri: `${BASE_URL}users/${email}`,
     json: true
   });
 
   if (response.status == 200) {
-    return response.data;
+    return response.user;
   }
 }
 
 async function getAllFlights() {
-  const response = await request({ uri: 'https://journeyedu.herokuapp.com/slingair/flights',
+  const response = await request({ uri: `${BASE_URL}flights`,
                                    json: true });
   return response.flights;
 }
@@ -27,14 +28,15 @@ async function handleSeatSelection(req, res) {
   res.render('./pages/seat-select', { title: 'Seat Selection', allFlights });
 }
 
-async function showFlight(req, res) {
+async function getFlight(req, res) {
   const { flightNumber } = req.params;
+
   const response = await request({
-    uri: `https://journeyedu.herokuapp.com/slingair/flights/${flightNumber}`,
+    uri: `${BASE_URL}flights/${flightNumber}`,
     json: true
   });
 
-  const flight = response[flightNumber]
+  const flight = response.flight
 
   if (response.status == 200) {
     res.status(200).json({ status: 200, flight });
@@ -47,8 +49,8 @@ async function newFlightPurchase(req, res) {
   const customerInfo = req.body;
 
   try {
-    const registerUser = await request({
-      uri: 'https://journeyedu.herokuapp.com/slingair/users',
+    const response = await request({
+      uri: `${BASE_URL}users`,
       method: 'POST',
       body: customerInfo,
       headers: {
@@ -58,7 +60,7 @@ async function newFlightPurchase(req, res) {
       json: true
     });
 
-    confirmationNumber = registerUser.reservation.id;
+    confirmationNumber = response.data.id;
 
     res.status(201).json({ status: 201, confirmationNumber });
   }
@@ -70,14 +72,16 @@ async function newFlightPurchase(req, res) {
 async function confirmedFlightPurchase(req, res, next) {
   const { id } = req.params;
   const response = await request({
-    uri: `https://journeyedu.herokuapp.com/slingair/users/${id}`,
+    uri: `${BASE_URL}users/${id}`,
     json: true
   });
 
-  const customer = response.data;
+  console.log(response)
+
+  const user = response.user;
 
   if (response.status == 200) {
-    res.render('./pages/flight-confirmed', { title: 'Take to the Skies!', customer })
+    res.render('./pages/flight-confirmed', { title: 'Take to the Skies!', user })
   } else next();
 }
 
@@ -99,7 +103,16 @@ function handleFourOhFour(req, res) {
   res.status(404).send('Page not Found!')
 }
 
-module.exports = { handleHomepage, handleSeatSelection, showFlight,
-                   newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, flightLookup, handleFourOhFour, findUser,
-                   getAllFlights}
+module.exports = {
+  handleHomepage,
+  handleSeatSelection,
+  getFlight,
+  newFlightPurchase,
+  confirmedFlightPurchase,
+  findFlight,
+  flightLookup,
+  handleFourOhFour,
+  findUser,
+  getAllFlights,
+  BASE_URL
+}

@@ -30,12 +30,12 @@ function handleConfirmSeat(event) {
   const customer = {
     'flight': flightSelect.value,
     'seat': selection,
-    'givenName': firstName.value,
-    'surname': lastName.value,
+    'firstName': firstName.value,
+    'lastName': lastName.value,
     'email': email.value
   }
 
-  fetch('/customers', {
+  fetch('/new-user', {
       method: 'POST',
       body: JSON.stringify(customer),
       headers: {
@@ -53,5 +53,6 @@ function handleConfirmSeat(event) {
     else {
       submissionError.textContent = data.message;
     }
-  });
+  })
+  .catch(e => console.log(e));
 }

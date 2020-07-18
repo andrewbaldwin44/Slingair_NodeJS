@@ -5,12 +5,25 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const { handleHomepage, handleSeatSelection, showFlight,
-        newFlightPurchase, confirmedFlightPurchase, findFlight,
-        flightLookup, handleFourOhFour } = require('./handlers/handlers');
+const {
+  handleHomepage,
+  handleSeatSelection,
+  getFlight,
+  newFlightPurchase,
+  confirmedFlightPurchase,
+  findFlight,
+  flightLookup,
+  handleFourOhFour
+} = require('./handlers/handlers');
 
-const { handleAdmin, confirmAuthentication, handleAuthenticated,
-        handleUsers, handleFlights, handleFindUser } = require('./handlers/admin-handlers');
+const {
+  handleAdmin,
+  confirmAuthentication,
+  handleAuthenticated,
+  handleUsers,
+  handleFlights,
+  handleFindUser
+} = require('./handlers/admin-handlers');
 
 const PORT = process.env.PORT || 8000;
 
@@ -28,8 +41,8 @@ app
 
 .get('/', handleHomepage)
 .get('/seat-select', handleSeatSelection)
-.get('/flights/:flightNumber', showFlight)
-.post('/customers', newFlightPurchase)
+.get('/flights/:flightNumber', getFlight)
+.post('/new-user', newFlightPurchase)
 .get('/flight-confirmed/:id', confirmedFlightPurchase)
 .get('/find-flight', findFlight)
 .post('/flight-lookup', flightLookup)

@@ -1,10 +1,18 @@
-const { getAllUsers, getAllFlights } = require('./handlers');
+const { getAllUsers, getAllFlights, BASE_URL } = require('./handlers');
+
 const request = require('request-promise');
 require('dotenv').config();
 const ls = require('local-storage');
 
 function isAuthenticatedAdmin() {
   return ls.get('authenticated')
+}
+
+async function getPaginatedUsers(page, limit) {
+  return await request({
+    uri: `${BASE_URL}users?page=${page}&limit=${limit}`,
+    json: true
+  });
 }
 
 function handleAdmin(req, res) {
@@ -50,6 +58,28 @@ async function handleFindUser(req, res) {
   } else res.redirect('/');
 }
 
+async function handleUsers(req, res) {
+  if (isAuthenticatedAdmin()) {
+    const page = getQueryValue(req.query.page, 1);
+    const limit = getQueryValue(req.query.limit, 3);
+
+    if (Object.keys(req.query).length < 2) {
+      res.redirect(`./users?page=${page}&limit=${limit}`);
+    }
+
+    try {
+      const response = await getPaginatedUsers(page, limit);
+      const paginatedUsers = response.users;
+      const usersRegistered = response.usersRegistered;
+
+      const paginatedResults = paginate(page, limit, paginatedUsers, usersRegistered);
+
+      res.render('./pages/users', { title: 'Slingair Customers', paginatedResults });
+    }
+    catch (e) {console.log(e)};
+  } else res.redirect('/');
+}
+
 function range(start, end) {
   const range = [];
   for (let i = start; i <= end; i++) {
@@ -58,34 +88,11 @@ function range(start, end) {
   return range;
 }
 
-async function handleUsers(req, res) {
-  if (isAuthenticatedAdmin()) {
-    if (Object.keys(req.query).length == 0) {
-      res.redirect(`${req.originalUrl}?page=1&limit=3`);
-    }
-
-    const page = Number(req.query.page);
-    const limit = Number(req.query.limit);
-
-    const paginatedUsers = await getPaginatedUsers(page, limit);
-
-    const paginatedResults = paginate(page, limit, paginatedUsers);
-    console.log(paginatedResults)
-
-    res.render('./pages/users', { title: 'Slingair Customers', paginatedResults });
-  } else res.redirect('/');
+function getQueryValue(queryValue, defaultValue) {
+  return queryValue !== undefined ? Number(queryValue) : defaultValue;
 }
 
-async function getPaginatedUsers(page, limit) {
-  return await request({
-    uri: `https://journeyedu.herokuapp.com/slingair/users?start=${page}&limit=${limit}`,
-    json: true
-  });
-}
-
-function paginate(page, limit, model) {
-  const modelLength = model.length
-
+function paginate(page, limit, model, modelLength) {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 

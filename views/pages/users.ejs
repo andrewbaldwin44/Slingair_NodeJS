@@ -7,7 +7,7 @@
   <ol class="users">
     <% paginatedResults.results.forEach(user => { %>
       <li>
-        <p><%= `${user.givenName} ${user.surname}` %></p>
+        <p><%= `${user.firstName} ${user.lastName}` %></p>
         <p><%= user.email %></p>
         <a href="#"><%= user.flight %></a>
       </li>
