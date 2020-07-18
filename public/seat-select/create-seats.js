@@ -9,7 +9,7 @@ function renderSeats(seatAvailibility) {
   showSeatMap();
   createSeats(seatAvailibility);
 
-  const seatMap = document.getElementsByName('seat');
+  const seatMap = document.querySelectorAll('.seat-button');
 
   seatMap.forEach(seat => seat.addEventListener('click', () => handleSeatSelection(seatMap)));
 }
@@ -33,9 +33,9 @@ function createSeats(seatAvailibility) {
         const seatNumber = `${r}${seatColumns[s]}`;
         const seat = document.createElement('li');
 
-        const seatOccupied = `<li><label class="seat"><span id="${seatNumber}" class="occupied">${seatNumber}</span></label></li>`
-        const seatAvailable = `<li><label class="seat"><input type="radio" name="seat" value="${seatNumber}" /> \
-                               <span id="${seatNumber}" class="avail">${seatNumber}</span></label></li>`
+        const seatOccupied = `<label class="seat"><span id="${seatNumber}" class="seat-button occupied">${seatNumber}</span></label>`
+        const seatAvailable = `<label class="seat"><input type="radio" class="seat-button" value="${seatNumber}" /> \
+                               <span id="${seatNumber}" class="avail">${seatNumber}</span></label>`
 
         if (isSeatAvailible(seatAvailibility, r, s)) seat.innerHTML = seatAvailable;
         else seat.innerHTML = seatOccupied;

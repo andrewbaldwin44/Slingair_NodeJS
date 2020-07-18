@@ -8,10 +8,13 @@ const submissionError = document.querySelector('#submission-error');
 
 function handleSeatSelection(seatMap) {
   const seat = event.target;
+
+  if (seat.classList.contains('occupied')) return;
+
   selection = seat.value;
 
   seatMap.forEach(x => {
-      if (x.value !== seat.value) {
+      if (!x.classList.contains('occupied') && x.value !== seat.value) {
           document.getElementById(x.value).classList.remove('selected');
       }
   });

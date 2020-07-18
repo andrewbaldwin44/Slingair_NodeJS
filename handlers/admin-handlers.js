@@ -1,6 +1,11 @@
 const { getAllUsers, getAllFlights } = require('./handlers');
+const request = require('request-promise');
 require('dotenv').config();
 const ls = require('local-storage');
+
+function isAuthenticatedAdmin() {
+  return ls.get('authenticated')
+}
 
 function handleAdmin(req, res) {
   res.render('./pages/admin', { title: 'Admin' });
@@ -16,32 +21,32 @@ function confirmAuthentication(req, res) {
 }
 
 function handleAuthenticated(req, res) {
-  if (ls.get('authenticated')) {
+  if (isAuthenticatedAdmin()) {
     res.render('./pages/authenticated-admin', { title: 'Admin' });
   } else res.redirect('/');
 }
 
-async function handleUsers(req, res) {
-  if (ls.get('authenticated')) {
-    if (Object.keys(req.query).length == 0) {
-      res.redirect(`${req.originalUrl}?page=1&limit=3`);
-    }
+async function handleFlights(req, res) {
+  if (isAuthenticatedAdmin()) {
+    const allFlights = await getAllFlights();
 
-    const allUsers = await getAllUsers();
-
-    const paginatedResults = paginate(req.query, allUsers);
-
-    res.render('./pages/users', { title: 'Slingair Customers', paginatedResults });
+    res.render('./pages/flights', { title: 'Slingair Flights', allFlights });
   } else res.redirect('/');
 }
 
-async function handleFlights(req, res) {
-  if (ls.get('authenticated')) {
-    const allFlights = await getAllFlights();
+async function handleFindUser(req, res) {
+  if (isAuthenticatedAdmin()) {
+    const { flight, seatNumber } = req.body;
 
-    //const paginatedResults = paginate(req.query, allFlights);
+    const allUsers = await getAllUsers();
 
-    res.render('./pages/flights', { title: 'Slingair Flights', allFlights });
+    const user = allUsers.find(user => {
+      return user.flight == flight && user.seat == seatNumber;
+    });
+
+
+    res.render(`/flight-confirmed/${user.id}`);
+    //res.status(201).json({ status: 201, user });
   } else res.redirect('/');
 }
 
@@ -53,10 +58,32 @@ function range(start, end) {
   return range;
 }
 
-function paginate(query, model) {
-  const page = Number(query.page);
-  const limit = Number(query.limit);
+async function handleUsers(req, res) {
+  if (isAuthenticatedAdmin()) {
+    if (Object.keys(req.query).length == 0) {
+      res.redirect(`${req.originalUrl}?page=1&limit=3`);
+    }
 
+    const page = Number(req.query.page);
+    const limit = Number(req.query.limit);
+
+    const paginatedUsers = await getPaginatedUsers(page, limit);
+
+    const paginatedResults = paginate(page, limit, paginatedUsers);
+    console.log(paginatedResults)
+
+    res.render('./pages/users', { title: 'Slingair Customers', paginatedResults });
+  } else res.redirect('/');
+}
+
+async function getPaginatedUsers(page, limit) {
+  return await request({
+    uri: `https://journeyedu.herokuapp.com/slingair/users?start=${page}&limit=${limit}`,
+    json: true
+  });
+}
+
+function paginate(page, limit, model) {
   const modelLength = model.length
 
   const startIndex = (page - 1) * limit;
@@ -78,10 +105,11 @@ function paginate(query, model) {
     results.previous = page - 1
   }
 
-  results.results = model.slice(startIndex, endIndex);
+  results.results = model;
 
   return results;
 }
 
 module.exports = { handleAdmin, confirmAuthentication,
-                  handleAuthenticated, handleUsers, handleFlights }
+                  handleAuthenticated, handleUsers, handleFlights,
+                  handleFindUser }

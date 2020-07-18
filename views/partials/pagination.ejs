@@ -9,7 +9,7 @@
     </a>
   <% } %>
 
-  <% for (let i = 1; i <= paginatedResults.pages; i++) { -%>
+  <% for (let i = 1; i <= paginatedResults.page + paginatedResults.limit; i++) { -%>
     <% if (paginatedResults.page == i) { %>
       <a href="#" class="pagination-button disabled"><%= i %></a>
     <% } %>

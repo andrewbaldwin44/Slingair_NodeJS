@@ -10,7 +10,7 @@ const { handleHomepage, handleSeatSelection, showFlight,
         flightLookup, handleFourOhFour } = require('./handlers/handlers');
 
 const { handleAdmin, confirmAuthentication, handleAuthenticated,
-        handleUsers, handleFlights } = require('./handlers/admin-handlers');
+        handleUsers, handleFlights, handleFindUser } = require('./handlers/admin-handlers');
 
 const PORT = process.env.PORT || 8000;
 
@@ -38,6 +38,7 @@ app
 .get('/admin-authenticated', handleAuthenticated)
 .get('/admin-authenticated/users', handleUsers)
 .get('/admin-authenticated/flights', handleFlights)
+.post('/admin-authenticated/find-user', handleFindUser)
 .get('*', handleFourOhFour)
 
 .listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -1,14 +1,14 @@
 const request = require('request-promise');
 
-function findUser(allUsers, name) {
-  return allUsers.find(user => user.givenName == name);
-}
-
-async function getAllUsers() {
-  return await request({
-    uri: 'https://journeyedu.herokuapp.com/slingair/users/',
+async function findUser(email) {
+  const response = await request({
+    uri: `https://journeyedu.herokuapp.com/slingair/users/${email}`,
     json: true
   });
+
+  if (response.status == 200) {
+    return response.data;
+  }
 }
 
 async function getAllFlights() {
@@ -86,11 +86,9 @@ function findFlight(req, res) {
 }
 
 async function flightLookup(req, res) {
-  const { name } = req.body;
+  const { email } = req.body;
 
-  const allUsers = await getAllUsers();
-
-  const user = findUser(allUsers, name);
+  const user = await findUser(email);
 
   if (user) {
     res.status(201).json({ status: 201, userID: user.id });
@@ -103,5 +101,5 @@ function handleFourOhFour(req, res) {
 
 module.exports = { handleHomepage, handleSeatSelection, showFlight,
                    newFlightPurchase, confirmedFlightPurchase,
-                   findFlight, flightLookup, handleFourOhFour, getAllUsers,
+                   findFlight, flightLookup, handleFourOhFour, findUser,
                    getAllFlights}
