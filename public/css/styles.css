@@ -4,29 +4,52 @@
 @import 'users.css';
 
 html {
-  --cadmium-red: #D80026;
-  --alabama-crimson: #AA001E;
+  --popstar-red: #B84A62;
+  --maximum-blue: #64A6BD;
   --selective-yellow: #FDBB01;
-  --orange: #F79D00;
-  --desert-sand: #E3C4A6;
+  --twilight-lavender: #7B435B;
+  --oxford-blue: #102542;
+  --medium-violet-red: #B91372;
   --page-padding: 24px;
   --heading-font: 'Permanent Marker', Arial, Helvetica, sans-serif;
   --content-font: 'Kosugi', Arial, Helvetica, sans-serif;
 
-  background: var(--orange);
+  background: var(--twilight-lavender);
   overflow: hidden;
 }
-
 main {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 190px);;
 }
+
 .header {
-  background: var(--alabama-crimson);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--maximum-blue);
   height: 120px;
   padding: var(--page-padding) 18px;
 }
+.header-logo {
+  background-image: url(../images/air-sling.png), url(../images/logo_text.png);
+  background-repeat: no-repeat;
+  background-position: left center, right center;
+  background-size: contain;
+  overflow: hidden;
+  text-indent: -1000px;
+  height: 60px;
+  width: 550px;
+  margin-left: 20px;
+}
+.profile-picture {
+  height: 80px;
+  width: 80px;
+  margin-right: 50px;
+  border: 5px solid var(--oxford-blue);
+  border-radius: 100%;
+}
+
 .content {
   flex: 1 0 auto;
   height: 100%;
@@ -49,7 +72,7 @@ main {
 .footer-logo {
   background: url(../images/air-sling.png) no-repeat;
   background-size: contain;
-  color: var(--alabama-crimson);
+  color: var(--maximum-blue);
   margin: 0 auto;
   font-family: var(--heading-font);
   font-size: 36px;
@@ -69,18 +92,8 @@ p, a, li, blockquote, input {
   position: relative;
   margin: 0 auto;
 }
-.header-logo {
-  background-image: url(../images/air-sling.png), url(../images/logo_text.png);
-  background-repeat: no-repeat;
-  background-position: left center, right center;
-  background-size: contain;
-  overflow: hidden;
-  text-indent: -1000px;
-  height: 60px;
-  width: 550px;
-}
 .flight-select {
-  background: var(--cadmium-red);
+  background: var(--popstar-red);
   height: 80px;
   display: flex;
   align-items: center;
@@ -95,7 +108,7 @@ p, a, li, blockquote, input {
 input {
   font-size: 24px;
   height: 42px;
-  border: 2px solid var(--orange);
+  border: 2px solid var(--twilight-lavender);
   border-radius: 4px;
   padding: 0 12px;
 }
@@ -107,15 +120,15 @@ input {
   width: 325px;
   padding: 48px 0;
   position: relative;
-  border-right: 15px solid var(--alabama-crimson);
-  border-left: 15px solid var(--alabama-crimson);
+  border-right: 15px solid var(--maximum-blue);
+  border-left: 15px solid var(--maximum-blue);
 }
 
 .content .message {
-  border-bottom: 2px solid var(--alabama-crimson);
+  border-bottom: 2px solid var(--maximum-blue);
   padding-bottom: 16px;
   margin: -10px 0 16px;
-  color: var(--alabama-crimson);
+  color: var(--maximum-blue);
   font-family: var(--heading-font);
   font-size: 20px;
 }
@@ -170,7 +183,7 @@ input {
 }
 .seat span {
   border-radius: 2px;
-  color:var(--cadmium-red);
+  color:var(--popstar-red);
   font-family: var(--content-font);
   font-size: 14px;
   display: flex;
@@ -187,7 +200,7 @@ input {
 
 .seat span.avail {
   background: #fff;
-  border: 1px solid var(--alabama-crimson);
+  border: 1px solid var(--maximum-blue);
 }
 
 .seat span.occupied {
@@ -199,13 +212,13 @@ input {
 
 .seat span:hover,
 .seat span.selected {
-  background: var(--alabama-crimson);
+  background: var(--maximum-blue);
   color: #fff;
   font-weight: 700;
 }
 
 .user {
-  border: 3px solid var(--alabama-crimson);
+  border: 3px solid var(--maximum-blue);
   border-radius: 5px;
   margin: auto 12px auto 18px;
   padding: 30px;
@@ -245,7 +258,7 @@ input {
   min-width: 48%;
 }
 .button.confirm {
-  background: var(--alabama-crimson);
+  background: var(--maximum-blue);
   border-color: transparent;
   color: #fff;
   cursor: pointer;
