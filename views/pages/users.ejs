@@ -1,6 +1,5 @@
 <%- include('../partials/head') -%>
 <%- include('../partials/banner') -%>
-<link rel="stylesheet" href="/css/master.css">
 <div class="users-main">
   <h1>Slingair Flyers</h1>
 
@@ -9,7 +8,7 @@
       <li>
         <p><%= `${user.firstName} ${user.lastName}` %></p>
         <p><%= user.email %></p>
-        <a href="#"><%= user.flight %></a>
+        <a href=<%= `/flight-confirmed/${user.id}` %>><%= user.flight %></a>
       </li>
       <% }) %>
     </ol>

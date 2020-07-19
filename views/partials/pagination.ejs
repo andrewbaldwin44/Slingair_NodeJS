@@ -1,36 +1,53 @@
-<div class="paginated-results">
+<div class="pagination-container">
+  <div class="pagination-buttons">
 
-  <a href="?page=1&limit=<%= paginatedResults.limit %>" class="pagination-button">First</a>
 
-  <% if (paginatedResults.previous) { %>
-    <a href="?page=<%= paginatedResults.previous %>&limit=<%= paginatedResults.limit %>"
-      class="pagination-button">
-      Previous
-    </a>
-  <% } %>
-
-  <% for (let i = 1; i <= paginatedResults.page + paginatedResults.limit; i++) { -%>
-    <% if (paginatedResults.page == i) { %>
-      <a href="#" class="pagination-button disabled"><%= i %></a>
+    <% if (paginatedResults.previous) { %>
+      <a href="?page=<%= paginatedResults.previous %>&limit=<%= paginatedResults.limit %>"
+         class="pagination-button">
+      <
+      </a>
     <% } %>
 
-    <% if (paginatedResults.lowerRange.includes(i) ||
-           paginatedResults.upperRange.includes(i)) { %>
-      <a href="?page=<%= i %>&limit=<%= paginatedResults.limit %>"
-         class="pagination-button">
-         <%= i %>
-       </a>
-     <% } %>
-  <% } %>
+    <% if (paginatedResults.page !== 1) { %>
+      <a href="?page=1&limit=<%= paginatedResults.limit %>" class="pagination-button">1</a>
+    <% } %>
 
-  <% if (paginatedResults.next) { %>
-    <a href="?page=<%= paginatedResults.next %>&limit=<%= paginatedResults.limit %>"
-      class="pagination-button">
-      Next
-    </a>
-  <% } %>
+    <% if (paginatedResults.page > 5) { %>
+      <span>...</span>
+    <% } %>
 
-  <a href="?page=<%= paginatedResults.pages %>&limit=<%= paginatedResults.limit %>"
-    class="pagination-button">Last</a>
+    <% const paginationButtonAmount = paginatedResults.page > 4
+        ? paginatedResults.page + 2
+        : 10;
+    %>
 
+    <% console.log(paginationButtonAmount) %>
+
+    <% for (let i = 1; i <= paginationButtonAmount; i++) { -%>
+      <% if (paginatedResults.page == i) { %>
+        <a href="#" class="pagination-button disabled"><%= i %></a>
+      <% } %>
+
+      <% if ((paginatedResults.lowerRange.includes(i) ||
+              paginatedResults.upperRange.includes(i)) &&
+              i !== 1 && i <= paginatedResults.pages) { %>
+        <a href="?page=<%= i %>&limit=<%= paginatedResults.limit %>"
+          class="pagination-button">
+          <%= i %>
+        </a>
+      <% } %>
+    <% } %>
+
+    <span>...</span>
+    <a href="?page=<%= paginatedResults.pages %>&limit=<%= paginatedResults.limit %>"
+       class="pagination-button"><%= paginatedResults.pages %></a>
+
+    <% if (paginatedResults.next) { %>
+      <a href="?page=<%= paginatedResults.next %>&limit=<%= paginatedResults.limit %>"
+        class="pagination-button">
+        >
+      </a>
+    <% } %>
+  </div>
 </div>

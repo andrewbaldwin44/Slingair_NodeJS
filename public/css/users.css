@@ -1,31 +1,30 @@
 .users-main {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 65vh;
 }
-
 .users {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   width: 100%;
+  height: 80%;
 }
-
 .users li {
-  width: 60%;
-  height: 200px;
-  background-color: white;
-  border: 2px solid black;
-}
-
-.paginated-results {
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: space-between;
-  width: 30%;
-  margin: 30px auto;
+  width: 50%;
+  height: 30%;
+  background-color: #D4B2D8;
+  border: 5px solid var(--oxford-blue);
+  box-shadow: var(--oxford-blue-box-shadow);
+}
+.users li a {
+  color: var(--popstar-red);
 }

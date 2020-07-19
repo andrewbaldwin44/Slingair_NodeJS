@@ -3,10 +3,12 @@
 @import 'homepage.css';
 @import 'users.css';
 @import 'login.css';
+@import 'pagination.css';
 
 html {
   --popstar-red: #B84A62;
   --maximum-blue: #64A6BD;
+  --sky-blue-crayola: #2DE1FC;
   --selective-yellow: #FDBB01;
   --twilight-lavender: #7B435B;
   --oxford-blue: #102542;
@@ -42,12 +44,12 @@ main {
   text-indent: -1000px;
   height: 60px;
   width: 550px;
-  margin-left: 20px;
+  margin-left: var(--page-padding);
 }
 .profile-picture {
   height: 80px;
   width: 80px;
-  margin-right: 50px;
+  margin-right: var(--page-padding);
   border: 5px solid var(--oxford-blue);
   border-radius: 100%;
 }
