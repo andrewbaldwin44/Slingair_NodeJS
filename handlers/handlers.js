@@ -2,13 +2,16 @@ const request = require('request-promise');
 const BASE_URL = 'https://slingairflights.herokuapp.com/';
 
 async function findUser(email) {
-  const response = await request({
-    uri: `${BASE_URL}users/${email}`,
-    json: true
-  });
+  try {
+    const response = await request({
+      uri: `${BASE_URL}users/${email}`,
+      json: true
+    });
 
-  if (response.status == 200) {
     return response.user;
+  }
+  catch {
+    return;
   }
 }
 
@@ -94,7 +97,7 @@ async function flightLookup(req, res) {
 
   if (user) {
     res.status(201).json({ status: 201, userID: user.id });
-  } else res.status(401).json({ status: 401, message: 'Reservation not found!' });
+  } else res.status(401).json({ status: 401, message: 'Flight could not found!' });
 }
 
 function handleFourOhFour(req, res) {

@@ -23,7 +23,7 @@ async function findUserBySeat(flight, seat) {
     });
   }
   catch {
-    return { status: 401, message: 'User not found!' };
+    return;
   }
 }
 
