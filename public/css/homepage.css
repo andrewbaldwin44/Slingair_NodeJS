@@ -31,7 +31,7 @@
   height: 100%;
   background-color: var(--medium-violet-red);
   border: 5px solid var(--oxford-blue);
-  box-shadow: 0 0 10px 2px var(--oxford-blue);
+  box-shadow: var(--oxford-blue-box-shadow);
   transition: transform 0.4s;
 }
 

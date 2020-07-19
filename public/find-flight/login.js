@@ -1,5 +1,5 @@
-const emailInput = document.querySelector('#customer-email');
-const submitButton = document.querySelector('#submit-email');
+const emailInput = document.querySelector('#user-email');
+const submitButton = document.querySelector('#submit-user-info');
 
 submitButton.addEventListener('click', () => {
   event.preventDefault();

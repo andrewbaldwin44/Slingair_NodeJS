@@ -87,7 +87,7 @@ async function confirmedFlightPurchase(req, res, next) {
 }
 
 function findFlight(req, res) {
-  res.render('./pages/find-flight', { title: 'Find your Flight!' });
+  res.render('./pages/login', { title: 'Find your Flight!' });
 }
 
 async function flightLookup(req, res) {

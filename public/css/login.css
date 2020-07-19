@@ -1,0 +1,39 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  margin-top: 100px;
+}
+.login-page h1 {
+  font-size: 2.2em;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+  background-color: #B91372;
+  border: 5px solid black;
+  width: 35%;
+  height: 50%;
+  margin-top: 80px;
+  padding: 30px;
+  box-shadow: var(--oxford-blue-box-shadow);
+}
+.login-form label {
+  color: black;
+}
+.submit-user-info {
+  background: var(--maximum-blue);
+}
+.login-form fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 30%;
+}
+.login-form fieldset input {
+  height: 50px;
+  border: 3px solid var(--oxford-blue);
+}

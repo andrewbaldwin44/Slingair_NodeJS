@@ -2,6 +2,7 @@
 @import '_reset.css';
 @import 'homepage.css';
 @import 'users.css';
+@import 'login.css';
 
 html {
   --popstar-red: #B84A62;
@@ -10,6 +11,7 @@ html {
   --twilight-lavender: #7B435B;
   --oxford-blue: #102542;
   --medium-violet-red: #B91372;
+  --oxford-blue-box-shadow: 0 0 10px 2px var(--oxford-blue);
   --page-padding: 24px;
   --heading-font: 'Permanent Marker', Arial, Helvetica, sans-serif;
   --content-font: 'Kosugi', Arial, Helvetica, sans-serif;
@@ -252,17 +254,16 @@ input {
 }
 
 .button {
+  display: block;
+  border-color: transparent;
   border-radius: 4px;
-  font-size: 16px;
   height: 48px;
   min-width: 48%;
+  cursor: pointer;
 }
 .button.confirm {
   background: var(--maximum-blue);
-  border-color: transparent;
   color: #fff;
-  cursor: pointer;
-  display: block;
   font-family: var(--heading-font);
   font-size: 24px;
   width: 100%;
