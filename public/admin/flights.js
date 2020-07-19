@@ -18,6 +18,8 @@ function handleSeatSelection() {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data)
+    if (data.status == 201) {
+      window.location.href = `/flight-confirmed/${data.userID}`;
+    } else console.log(data.message);
   });
 }

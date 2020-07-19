@@ -1,6 +1,6 @@
 # The Slingair API
 
-The base url of the API is `https://journeyedu.herokuapp.com`.
+The base url of the API is `https://slingairflights.herokuapp.com/`.
 
 ## Usage
 
@@ -19,27 +19,21 @@ triggers the service to spin up.
 ### Persistence
 
 There is data persistence for this API. Changes you make will remain. In fact, the changes of all other users
-will be visible to you. At some point, the instructor may do a _data reset_, in which case all of the data you
+will be visible to you. At some point, the server may do a _data reset_, in which case all of the data you
 submitted will be deleted.
 
 ## List of Endpoints
 
-| Method | Endpoint                          | Description                                                                                                                                                |
-| ------ | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GET`  | `/slingair/flights`               | returns an array of flight numbers                                                                                                                         |
-| `GET`  | `/slingair/flights/:flight`       | returns info on a specific flight                                                                                                                          |
-| `GET`  | `/slingair/flights/:flight/:seat` | returns info on a specific seat                                                                                                                            |
-| `GET`  | `/slingair/users`                 | returns an array of all users. Accepts query
-                                               params of `limit` and `start` for pagination. \_If values are not provided, it
-                                              will return the first 10 users |
-| `GET`  | `/slingair/users/:userId`         | returns the user object based on the userId (you can also pass an email instead of
-                                               a userId) |
-| `POST` | `/slingair/users`                 | creates a new user/reservation                                                                                                                             |
+| Method | Endpoint                          | Description                                                                                                                             |
+| ------ | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET`  | `/slingair/flights`               | returns an array of flight numbers                                                                                                      |
+| `GET`  | `/slingair/flights/:flight`       | returns info on a specific flight                                                                                                       |
+| `GET`  | `/slingair/flights/:flight/:seat` | returns info on a user given a specific flight number and seat                                                                          |
+| `GET`  | `/slingair/users`                 | returns an array of all users. Accepts query params of `limit` and `start` for pagination. If values are not provided, it will return the first 10 users    |
+| `GET`  | `/slingair/users/:userId`         | returns the user object based on an indentifier (either email or ID)                                                                    |
+| `POST` | `/slingair/users`                 | creates a new user                                                                                                                      |
+| `POST` | `/slingair/flights`               | creates a new flight
 
 ### API Response
 
 The API will always provide a response. :P
-
-## Examples
-
-_...coming soon... ...maybe._

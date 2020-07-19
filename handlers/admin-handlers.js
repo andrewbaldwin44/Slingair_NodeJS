@@ -15,6 +15,18 @@ async function getPaginatedUsers(page, limit) {
   });
 }
 
+async function findUserBySeat(flight, seat) {
+  try {
+    return await request({
+      uri: `${BASE_URL}flights/${flight}/${seat}`,
+      json: true
+    });
+  }
+  catch {
+    return { status: 401, message: 'User not found!' };
+  }
+}
+
 function handleAdmin(req, res) {
   res.render('./pages/admin', { title: 'Admin' });
 }
@@ -46,15 +58,12 @@ async function handleFindUser(req, res) {
   if (isAuthenticatedAdmin()) {
     const { flight, seatNumber } = req.body;
 
-    const allUsers = await getAllUsers();
+    const response = await findUserBySeat(flight, seatNumber);
 
-    const user = allUsers.find(user => {
-      return user.flight == flight && user.seat == seatNumber;
-    });
-
-
-    res.render(`/flight-confirmed/${user.id}`);
-    //res.status(201).json({ status: 201, user });
+    if (response.status == 200) {
+      const user = response.user;
+      res.status(201).json({ status: 201, userID: user.id });
+    } else res.status(401).json({ status: 401, message: response.message });
   } else res.redirect('/');
 }
 
@@ -117,6 +126,11 @@ function paginate(page, limit, model, modelLength) {
   return results;
 }
 
-module.exports = { handleAdmin, confirmAuthentication,
-                  handleAuthenticated, handleUsers, handleFlights,
-                  handleFindUser }
+module.exports = {
+  handleAdmin,
+  confirmAuthentication,
+  handleAuthenticated,
+  handleUsers,
+  handleFlights,
+  handleFindUser
+}

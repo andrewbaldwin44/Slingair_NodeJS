@@ -76,8 +76,6 @@ async function confirmedFlightPurchase(req, res, next) {
     json: true
   });
 
-  console.log(response)
-
   const user = response.user;
 
   if (response.status == 200) {
