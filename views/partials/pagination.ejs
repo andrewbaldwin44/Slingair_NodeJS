@@ -1,50 +1,52 @@
 <div class="pagination-container">
   <div class="pagination-buttons">
 
+    <% const currentPage = paginatedResults.page %>
+    <% const lastPage = paginatedResults.pages %>
+    <% const previousPage = paginatedResults.previous %>
+    <% const nextPage = paginatedResults.next %>
+    <% const usersToShow = paginatedResults.limit %>
 
-    <% if (paginatedResults.previous) { %>
-      <a href="?page=<%= paginatedResults.previous %>&limit=<%= paginatedResults.limit %>"
+    <% const buttonsToShow = 3 %>
+
+    <% if (previousPage) { %>
+      <a href="?page=<%= previousPage %>&limit=<%= usersToShow %>"
          class="pagination-button">
       <
       </a>
     <% } %>
 
-    <% if (paginatedResults.page !== 1) { %>
-      <a href="?page=1&limit=<%= paginatedResults.limit %>" class="pagination-button">1</a>
+    <% if (currentPage !== 1) { %>
+      <a href="?page=1&limit=<%= usersToShow %>" class="pagination-button">1</a>
     <% } %>
 
-    <% if (paginatedResults.page > 5) { %>
+    <% if (currentPage > (buttonsToShow * 2)) { %>
       <span>...</span>
     <% } %>
 
-    <% const paginationButtonAmount = paginatedResults.page > 4
-        ? paginatedResults.page + 2
-        : 10;
-    %>
-
-    <% console.log(paginationButtonAmount) %>
-
-    <% for (let i = 1; i <= paginationButtonAmount; i++) { -%>
-      <% if (paginatedResults.page == i) { %>
+    <% for (let i = 1; i <= currentPage + buttonsToShow; i++) { -%>
+      <% if (currentPage == i) { %>
         <a href="#" class="pagination-button disabled"><%= i %></a>
       <% } %>
 
       <% if ((paginatedResults.lowerRange.includes(i) ||
               paginatedResults.upperRange.includes(i)) &&
-              i !== 1 && i <= paginatedResults.pages) { %>
-        <a href="?page=<%= i %>&limit=<%= paginatedResults.limit %>"
+              i !== 1 && i <= lastPage) { %>
+        <a href="?page=<%= i %>&limit=<%= usersToShow %>"
           class="pagination-button">
           <%= i %>
         </a>
       <% } %>
     <% } %>
 
-    <span>...</span>
-    <a href="?page=<%= paginatedResults.pages %>&limit=<%= paginatedResults.limit %>"
-       class="pagination-button"><%= paginatedResults.pages %></a>
+    <% if (currentPage !== lastPage) { %>
+      <span>...</span>
+      <a href="?page=<%= lastPage %>&limit=<%= usersToShow %>"
+         class="pagination-button"><%= lastPage %></a>
+    <% } %>
 
-    <% if (paginatedResults.next) { %>
-      <a href="?page=<%= paginatedResults.next %>&limit=<%= paginatedResults.limit %>"
+    <% if (nextPage) { %>
+      <a href="?page=<%= nextPage %>&limit=<%= usersToShow %>"
         class="pagination-button">
         >
       </a>
