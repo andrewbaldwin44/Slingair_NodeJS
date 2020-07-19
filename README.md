@@ -1,18 +1,16 @@
-# Module 3 - Node - Mini project
+# Slingair NodeJS Project
+> Web App used to Book Imaginary Flights with Slingair
+
+The project is live at [flyslingair](https://flyslingair.herokuapp.com/)
 
 <img src='public/images/screenshots/header.png' style='width:100%' />
 
-You just accepted a web developer position at Slingshot Airlines!
+## Features
 
-They were really impressed with the work you did at Concordia Bootcamps. After a conversation with the CEO at the job fair, they hired you on the spot! They have project that they need to ship asap and are confident that you can deliver.
-
-They have a new seat-booking app that is set to be released next week. You were told that _most_ of the work is already done. And that all that remains is just to connect the different pieces to get it working. Because you worked on similar functionality during your bootcamp, you're confident that you can pull it off.
-
-You have been provided with a GitHub repo and little else.
-
-You ask if it is possible to speak to the dev that worked on the project thus far. Nope. Not possible. He left without notice and on bad terms.
-
-Looks like you're on your own...
+- The app connects with the [Slingair API](https://github.com/andrewbaldwin44/Slingair_API) to provide booking on hundreds of flights, with thousands of users already in the system.
+- Data persistence is present, so a user can only register once and a booked seat will no longer be available to anyone for that flight.
+- Login to your account to view your booked flight!
+- Administrative privilages allow viewing of all flights, all users, and user information on all booked seats.
 
 ---
 
@@ -32,43 +30,19 @@ Looks like you're on your own...
 - Contact the server with the data, and wait for a success response to redirect to the `/confirmed.html` page.
 - The confirmed page should display a confirmation message to the user with the info that they entered on the previous screen.
 
+## Requirements
+
+- Node.js
+- Yarn
+
 ## Project Setup
+
+To run the project simply clone the repo and run:
 
 ```
 yarn install
 ```
 
-This will start the server and make the static pages accessible via their endpoint.
-
-## Developer Notes
-
-There is a folder called `notes` that contains possible hints on what to do next...
-
----
-
-## Requirements for Poject Completion
-
-In order for your project to be considered `DONE` (passing grade), you should have a working MVP of the app.
-
-### Minimum Viable Product Details
-
-1. user can select a flight from a dropdown (or buttons, or radio ). _Current implementation of an input field is not ideal._
-2. user can select an available seat.
-3. user can enter their personal information.
-4. user can view the flight confirmation page.
-5. given a `userId` (or other user info --up to you), user should be able to view his reservation.
+This will start the server and make the pages accessible via their endpoint.
 
 _Note that mutated test data will be preserved as long as your server is running. It stays in memory. The changes will only be reset when the server is restarted._
-
-### Optional
-
-1. Connect to the remote db/server to get "live" data.
-
-- NOTE TO INSTRUCTOR: There may or may not be a live server. Remove this goal, if not. (Server is hosted on a free heroku plan at the moment, so first call of the day will fail.)
-
-2. given a `userId` (or other user info --up to you), user should be able to view their reservation.
-3. Create an admin page that displays the seat status for a flight.
-   - you could reuse the flight selection method you implemented above.
-   - this page should display a table of all seats, and their status.
-4. The admin page also displays the name of the user in the seat.
-5. Each seat also has a link to view the reservation details.
