@@ -27,7 +27,7 @@
     <% for (let i = 1; i <= currentPage + buttonsToShow; i++) { -%>
       <% if (currentPage == i) { %>
         <a href="#" class="pagination-button disabled"><%= i %></a>
-      <% } %>
+      <% }  %>
 
       <% if ((paginatedResults.lowerRange.includes(i) ||
               paginatedResults.upperRange.includes(i)) &&

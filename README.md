@@ -1,48 +1,74 @@
-# Slingair NodeJS Project
-> Web App used to Book Imaginary Flights with Slingair
-
-The project is live at [flyslingair](https://flyslingair.herokuapp.com/)
+# Slingair Node.js Project
 
 <img src='public/images/screenshots/header.png' style='width:100%' />
 
+> Web App used to Book Imaginary Flights with Slingair
+
+## Demo
+
+The project is live at [flyslingair](https://flyslingair.herokuapp.com/)
+
 ## Features
 
-- The app connects with the [Slingair API](https://github.com/andrewbaldwin44/Slingair_API) to provide booking on hundreds of flights, with thousands of users already in the system.
-- Data persistence is present, so a user can only register once and a booked seat will no longer be available to anyone for that flight.
-- Login to your account to view your booked flight!
-- Administrative privilages allow viewing of all flights, all users, and user information on all booked seats.
+**_Book your flight!_**
 
----
+<div align='center'>
+  <img src='./public/images/screenshots/seat-select.png' alt='Login' height='440px' />
+</div><br>
+
+**_You will Receive Confirmation of your Booking_**
+
+<div align='center'>
+  <img src='./public/images/screenshots/confirmed.png' alt='Login' height='440px' />
+</div><br>
+
+**_Login to your account to view your booked flight!_**
+
+<div align='center'>
+  <img src='./public/images/screenshots/authentication.png' alt='Login' height='340px' />
+</div><br>
+
+**_Administrative privilages allow viewing of all flights, all users, and user information on all booked seats._**
+
+<div align='center'>
+  <img src='./public/images/screenshots/admin_panel.png' alt='Login' width='70%' /><br><br>
+  <img src='./public/images/screenshots/admin_flyers.png' alt='Login' width='70%' />
+</div><br>
 
 ## The App
 
-### Screenshots
+- The app connects with the [Slingair API](https://github.com/andrewbaldwin44/Slingair_API) to provide booking on hundreds of flights, with thousands of users already in the system.
+- Data persistence is present, so a user can only register once and a booked seat will no longer be available to anyone for that flight.
 
-<img src='public/images/screenshots/seat-select.png' style='float:left;width:48%;margin-right:4%;' />
-<img src='public/images/screenshots/confirmed.png' style='float:left;width:48%' />
+## Deploy the project
 
-### Functionality
+**Clone the repo to your local machine using the terminal**:
 
-- When a user navigates to `/seat-select`, they are presented with an input to enter the flight number.
-- With the flight number, make a request to the server for the seating availability on that flight.
-- When a response with seating is received, display the seating input as well as the form requesting user's information.
-- User selects a seat, enters information and clicks 'Confirm'.
-- Contact the server with the data, and wait for a success response to redirect to the `/confirmed.html` page.
-- The confirmed page should display a confirmation message to the user with the info that they entered on the previous screen.
+```
+$ git clone git@github.com:andrewbaldwin44/Slingair_NodeJS.git
+```
 
-## Requirements
+**Install the Dependencies**:
+
+1. Navigate into the project directory `cd Slingair_NodeJS`
+2. Install the required packages `yarn install`
+3. Start the development server `yarn start`
+
+This will run the app in the development mode.<br />
+Open <http://localhost:8000> to view it in the browser.
+
+The page will reload if you make edits.
+
+## Technologies Used
 
 - Node.js
-- Yarn
+- Express
+- JavaScript
+- CSS
+- HTML
 
-## Project Setup
+## Author
 
-To run the project simply clone the repo and run:
+👤 **Andrew Baldwin**
 
-```
-yarn install
-```
-
-This will start the server and make the pages accessible via their endpoint.
-
-_Note that mutated test data will be preserved as long as your server is running. It stays in memory. The changes will only be reset when the server is restarted._
+- Github: [@andrewbaldwin44](https://github.com/andrewbaldwin44)

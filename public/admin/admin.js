@@ -4,8 +4,6 @@ const passwordForm = document.querySelector('#password-form');
 function validatePassword() {
   event.preventDefault();
 
-  console.log(passwordInput.value)
-
   fetch('/confirm-authentication', {
     method: 'POST',
     body: JSON.stringify({ password: passwordInput.value }),
@@ -17,7 +15,7 @@ function validatePassword() {
   .then(response => response.json())
   .then(data => {
     if (data.status == 201) {
-      window.location.href = '/admin-authenticated';
+      window.location.replace('/admin-authenticated');
     }
     else console.log(data.message);
   });
